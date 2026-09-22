@@ -1,13 +1,14 @@
 # Hello, I'm Kel! 👋🏼
 
-I'm a Senior Software Engineer with 12 years of engineering experience, including 7 years architecting cloud systems, distributed test platforms, and CI/CD pipelines across AWS and GCP. 
+I'm a Senior Software Engineer with 12 years of engineering experience, including 6+ years specializing in web applications and native mobile architectures with a focus on render latency optimization, asynchronous data streaming, and offline-resilient systems.
 
 ### Core Expertise
-- **Cloud & Infrastructure:** AWS, GCP, DigitalOcean, Terraform
-- **Orchestration:** Kubernetes (GKE, EKS), Argo CD, GitOps
-- **Delivery & CI/CD:** CircleCI, GitHub Actions, Release Automation
-- **Observability:** Datadog, Prometheus, Grafana, OpenTelemetry, Sentry
-
+- **Web Frontend:** React, TypeScript, Redux, Vite
+- **iOS:** Swift, SwiftUI, UIKit, Swift Concurrency, Apple Instruments, Core Data, URLSession, Keychain 
+- **Android:** Kotlin, Jetpack Compose, Coroutines & Flow, Android Jetpack, Keystore 
+- **Testing:** Cypress, Playwright, Jest, XCTest, JUnit
+- **Observability:** Datadog, Sentry
+  
 
 ## Technical Highlights
 
@@ -26,8 +27,6 @@ A production-grade event-driven algorithmic trading bot, designed to serve as a 
 - **Observability Pipeline:** Configured a local **Grafana Alloy** telemetry collector to scrape application-level Prometheus metrics (API latency histograms, inventory levels, PnL) and remote-write them directly to Grafana Cloud.
 
 - **Automated GitOps Pipeline:** Programmed a **GitHub Actions** workflow executing automated testing with coverage metrics, terraform validation, security scanning, image publication to GitHub Container Registry (GHCR), and SSH-based remote deployments.
-
-- **Disaster Recovery & Redundancy:** Authored a POSIX-compliant PostgreSQL backup script featuring transaction-consistent dumps and archive verification, coupled with automated daily **DigitalOcean** snapshot backups for full-host recovery.
   
 **Stack:** DigitalOcean, Terraform, Docker/Compose, GitHub Actions, Grafana Alloy, Doppler Secrets Manager, PostgreSQL, Python.
 
@@ -38,54 +37,48 @@ A production-grade event-driven algorithmic trading bot, designed to serve as a 
   <thead>
     <tr>
       <th align="left" valign="top" width="16.6%">Languages</th>
-      <th align="left" valign="top" width="16.6%">Cloud Platforms</th>
+      <th align="left" valign="top" width="16.6%">Frameworks & Libraries</th>
+      <th align="left" valign="top" width="16.6%">Testing</th>
       <th align="left" valign="top" width="16.6%">CI/CD & Infrastructure</th>
-      <th align="left" valign="top" width="16.6%">Data Systems</th>
-      <th align="left" valign="top" width="16.6%">Observability & Security</th>
+      <th align="left" valign="top" width="16.6%">Observability</th>
       <th align="left" valign="top" width="16.6%">AI Tooling</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td valign="top">
-        Go<br/>
+        TypeScript<br/>
+        JavaScript<br/>
         Python<br/>
-        Node.js<br/>
-        Bash<br/>
         Swift<br/>
         Kotlin
       </td>
       <td valign="top">
-        AWS (ECS, EC2, S3)<br/>
-        GCP (GCE, GCS)<br/>
-        DigitalOcean
+        React<br/>
+        GraphQL<br/>
+        Redux<br/>
+        TanStack Query<br/>
+        Vite
       </td>
       <td valign="top">
-        Kubernetes (GKE, EKS)<br/>
-        Docker<br/>
-        Argo CD<br/>
-        Terraform<br/>
-        Atlantis<br/>
+        Jest<br/>
+        React Testing Library<br/>
+        Playwright<br/>
+        Cypress<br/>
+        XCTest<br/>
+        XCUITest<br/>
+        JUnit<br/>
+        Espresso
+      </td>
+      <td valign="top">
         GitHub Actions<br/>
-        CircleCI<br/>
-        Buildkite<br/>
-        Bazel
-      </td>
-      <td valign="top">
-        PostgreSQL<br/>
-        Redis<br/>
-        BigQuery<br/>
-        Pub/Sub
+        CircleCI
       </td>
       <td valign="top">
         Datadog<br/>
         Prometheus<br/>
         Grafana<br/>
-        OpenTelemetry<br/>
-        Sentry<br/>
-        HashiCorp Vault<br/>
-        Doppler<br/>
-        Snyk
+        Sentry
       </td>
       <td valign="top">
         Claude Code<br/>
