@@ -16,9 +16,27 @@ I built and run a live algorithmic market maker for Kalshi prediction markets. I
 - **CI/CD:** GitHub Actions runs tests with coverage, Terraform checks and security scans, publishes images to GHCR, and deploys to the server.
 - **Observability:** Prometheus metrics (API latency, inventory, P&L) are scraped by Grafana Alloy into Grafana Cloud, with webhook alerts.
 
-**What I'm working on next:** splitting the bot into market-data, strategy and execution services connected by streams, with idempotent order handling and replay tests, then moving it to Kubernetes.
-
 `Python (asyncio)` `PostgreSQL` `Docker` `Terraform` `GitHub Actions` `Prometheus` `Grafana` `Doppler` `DigitalOcean`
+
+```mermaid
+flowchart TB
+  GHA["GitHub Actions<br/>test · scan · build<br/>push to GHCR · deploy"]
+  DOP["Doppler<br/>secrets at runtime"]
+  WS["Kalshi WebSocket<br/>order book + fills"]
+  BOT["<b>Market maker</b><br/>asyncio Python in Docker<br/>DigitalOcean · Terraform"]
+  GC["Grafana Cloud<br/>metrics via Alloy"]
+  DB[("PostgreSQL")]
+  HOOK["Alert webhook"]
+  REST["Kalshi REST API<br/>signed orders"]
+
+  GHA --> BOT
+  DOP -.-> BOT
+  WS --> BOT
+  BOT --> GC
+  BOT --> DB
+  BOT -.-> HOOK
+  BOT --> REST
+```
 
 ### [DFS Optimizer](https://github.com/kel-reid/DFS-Optimizer)
 
@@ -28,9 +46,20 @@ An optimization and Monte Carlo engine I built to generate 150-lineup NFL daily 
 - Simulates 5,000 slates with skewed player distributions and correlated team-level shocks in NumPy, then selects the portfolio with the best simulated return.
 - Detects the target site from its input files; tested with pytest; containerized.
 
-**Next:** I'm adding an API and worker queue so simulations run as background jobs.
+`Python` `NumPy` `pandas` `PuLP` `pytest` `Docker` 
 
-`Python` `NumPy` `pandas` `PuLP` `pytest` `Docker`
+```mermaid
+flowchart TB
+  IN["Player pool + contest CSVs<br/>site detected from file names"] --> LOAD["Filter player pool<br/>injuries · backup QBs"]
+  LOAD --> SOLVE["MILP solver<br/>500 candidates"]
+  LOAD --> GAME["Game simulator<br/>5,000 slates"]
+  LOAD --> FIELD["Opponent field<br/>10,000 lineups"]
+  SOLVE --> RANK["Score candidates<br/>vs field · sim ROI"]
+  GAME --> RANK
+  FIELD --> RANK
+  RANK --> SEL["Select 150 lineups<br/>exposure caps"]
+  SEL --> OUT["Upload-ready CSV"]
+```
 
 ## Skills
 
@@ -85,10 +114,3 @@ An optimization and Monte Carlo engine I built to generate 150-lineup NFL daily 
 ## Get in touch
 
 I'm always happy to talk backend systems, reliability or testing. Find me on [LinkedIn](https://www.linkedin.com/in/kel-reid/).
-
-
-
-### 
-<p align="center">
-  <img width="2752" height="1536" alt="CI-CD" src="https://github.com/user-attachments/assets/8a1c5689-f224-4b69-9710-427c52c3e044" />
-</p>
