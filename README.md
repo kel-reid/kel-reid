@@ -1,94 +1,91 @@
-# Hello, I'm Kel! 👋🏼
+# Hello, I'm Kel!
 
-I'm a Senior Software Engineer with 12 years of engineering experience, including 6+ years specializing in web applications and native mobile architectures with a focus on render latency optimization, asynchronous data streaming, and offline-resilient systems.
+I'm a senior software engineer with 12 years of experience building the systems that keep software reliable: test infrastructure, CI/CD pipelines and observability. These days I'm focused on backend engineering: event-driven services, PostgreSQL, and the infrastructure that runs them.
 
-### Core Expertise
-- **Web Frontend:** React, TypeScript, Redux, Vite
-- **iOS:** Swift, SwiftUI, UIKit, Swift Concurrency, Apple Instruments, Core Data, URLSession, Keychain 
-- **Android:** Kotlin, Jetpack Compose, Coroutines & Flow, Android Jetpack, Keystore 
-- **Testing:** Cypress, Playwright, Jest, XCTest, JUnit
-- **Observability:** Datadog, Sentry
-  
+## Projects
 
-## Technical Highlights
+### [Kalshi Market Maker](https://github.com/kel-reid/Kalshi-Trading-Bot)
 
-**[Event-Driven Trading Infrastructure](https://github.com/kelcodesstuff/Kalshi-Trading-Bot)**
+I built and run a live algorithmic market maker for Kalshi prediction markets. It quotes both sides of sports contracts using Avellaneda-Stoikov pricing and trades real capital, so I designed it with safety and recovery first.
 
-A production-grade event-driven algorithmic trading bot, designed to serve as a reference architecture for zero-trust cloud infrastructure, automated GitOps delivery pipelines, and real-time observability.
+- **Async, event-driven service:** asyncio Python handles a WebSocket order-book feed and REST order execution concurrently; order history and state live in PostgreSQL.
+- **Risk controls:** session loss and fee limits, inventory caps, a pause on fast price moves, and a kill switch that withdraws all quotes on crash or shutdown. The process won't exit until the exchange confirms the cancellations.
+- **Infrastructure as code:** Terraform provisions an isolated VPC and a firewall that limits outbound traffic to DNS, HTTP/S and NTP. CI validates it and scans it with tfsec.
+- **Secrets:** Doppler injects API keys and RSA signing keys at runtime, so nothing sensitive is written to the host's disk.
+- **Containers:** multi-stage Docker builds, a non-root runtime user, and database and metrics ports bound to localhost only.
+- **CI/CD:** GitHub Actions runs tests with coverage, Terraform checks and security scans, publishes images to GHCR, and deploys to the server.
+- **Observability:** Prometheus metrics (API latency, inventory, P&L) are scraped by Grafana Alloy into Grafana Cloud, with webhook alerts.
 
-- **Infrastructure as Code (IaC):** Orchestrated cloud resource deployment programmatically via **Terraform**, enforcing declarative configurations, structural validation checks, and tag-based associations.
+**What I'm working on next:** splitting the bot into market-data, strategy and execution services connected by streams, with idempotent order handling and replay tests, then moving it to Kubernetes.
 
-- **Perimeter & Network Security:** Provisioned an isolated **DigitalOcean** VPC network and enforced firewall rules to block unauthorized inbound connections and limit outbound egress strictly to DNS, HTTP/S, and NTP boundaries.
+`Python (asyncio)` `PostgreSQL` `Docker` `Terraform` `GitHub Actions` `Prometheus` `Grafana` `Doppler` `DigitalOcean`
 
-- **Zero-Trust Secrets Management:** Integrated **Doppler** to inject application secrets and RSA cryptographic credentials directly into container memory at startup, eliminating the need to store plaintext keys or configs on the host disk.
+### [DFS Optimizer](https://github.com/kel-reid/DFS-Optimizer)
 
-- **Container Hardening & Least Privilege:** Engineered **multi-stage Docker builds** to minimize runtime surface areas, executing services under a low-privilege system user while restricting database and telemetry port bindings to prevent public exposure.
+An optimization and Monte Carlo engine I built to generate 150-lineup NFL daily fantasy portfolios for FanDuel and DraftKings.
 
-- **Observability Pipeline:** Configured a local **Grafana Alloy** telemetry collector to scrape application-level Prometheus metrics (API latency histograms, inventory levels, PnL) and remote-write them directly to Grafana Cloud.
+- Generates 500 candidate lineups with an integer-programming solver (PuLP/CBC) under salary-cap, stacking, exposure and uniqueness constraints.
+- Simulates 5,000 slates with skewed player distributions and correlated team-level shocks in NumPy, then selects the portfolio with the best simulated return.
+- Detects the target site from its input files; tested with pytest; containerized.
 
-- **Automated GitOps Pipeline:** Programmed a **GitHub Actions** workflow executing automated testing with coverage metrics, terraform validation, security scanning, image publication to GitHub Container Registry (GHCR), and SSH-based remote deployments.
-  
-**Stack:** DigitalOcean, Terraform, Docker/Compose, GitHub Actions, Grafana Alloy, Doppler Secrets Manager, PostgreSQL, Python.
+**Next:** I'm adding an API and worker queue so simulations run as background jobs.
 
+`Python` `NumPy` `pandas` `PuLP` `pytest` `Docker`
 
 ## Skills
 
-<table style="width: 100%; border-collapse: collapse;">
+<table>
   <thead>
     <tr>
-      <th align="left" valign="top" width="16.6%">Languages</th>
-      <th align="left" valign="top" width="16.6%">Frameworks & Libraries</th>
-      <th align="left" valign="top" width="16.6%">Testing</th>
-      <th align="left" valign="top" width="16.6%">CI/CD & Infrastructure</th>
-      <th align="left" valign="top" width="16.6%">Observability</th>
-      <th align="left" valign="top" width="16.6%">AI Tooling</th>
+      <th align="left" valign="top">Backend &amp; Data</th>
+      <th align="left" valign="top">Infrastructure &amp; Delivery</th>
+      <th align="left" valign="top">Observability</th>
+      <th align="left" valign="top">Testing &amp; Quality</th>
+      <th align="left" valign="top">Also</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td valign="top">
-        TypeScript<br/>
-        JavaScript<br/>
-        Python<br/>
-        Swift<br/>
-        Kotlin
+        Python (asyncio)<br/>
+        PostgreSQL<br/>
+        REST &amp; WebSocket APIs<br/>
+        NumPy, pandas
       </td>
       <td valign="top">
-        React<br/>
-        GraphQL<br/>
-        Redux<br/>
-        TanStack Query<br/>
-        Vite
-      </td>
-      <td valign="top">
-        Jest<br/>
-        React Testing Library<br/>
-        Playwright<br/>
-        Cypress<br/>
-        XCTest<br/>
-        XCUITest<br/>
-        JUnit<br/>
-        Espresso
-      </td>
-      <td valign="top">
+        Docker / Compose<br/>
+        Terraform<br/>
         GitHub Actions<br/>
-        CircleCI
+        CircleCI<br/>
+        Doppler
       </td>
       <td valign="top">
-        Datadog<br/>
         Prometheus<br/>
         Grafana<br/>
+        Datadog<br/>
         Sentry
       </td>
       <td valign="top">
-        Claude Code<br/>
-        Gemini API<br/>
-        OpenAI API<br/>
-        Model Context Protocol (MCP)
+        pytest<br/>
+        Playwright<br/>
+        Cypress<br/>
+        Jest<br/>
+        XCTest / XCUITest<br/>
+        JUnit / Espresso
+      </td>
+      <td valign="top">
+        TypeScript, React, GraphQL<br/>
+        Swift, Kotlin<br/>
+        Claude Code, MCP
       </td>
     </tr>
   </tbody>
 </table>
+
+## Get in touch
+
+I'm always happy to talk backend systems, reliability or testing. Find me on [LinkedIn](https://www.linkedin.com/in/kel-reid/).
+
 
 
 ### 
