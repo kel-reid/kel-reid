@@ -43,8 +43,9 @@ flowchart TB
 An optimization and Monte Carlo engine I built to generate 150-lineup NFL daily fantasy portfolios for FanDuel and DraftKings.
 
 - Generates 500 candidate lineups with an integer-programming solver (PuLP/CBC) under salary-cap, stacking, exposure and uniqueness constraints.
-- Simulates 5,000 slates with skewed player distributions and correlated team-level shocks in NumPy, then selects the portfolio with the best simulated return.
-- Detects the target site from its input files; tested with pytest; containerized.
+- Simulates 5,000 slates with skewed player distributions and correlated team-level shocks in NumPy, plus a field of 10,000 opponent lineups, then scores every candidate against that field.
+- Selects the 150 lineups with the best simulated return, within per-position exposure caps.
+- Detects the target site from its input files and runs the same pipeline for both; tested with pytest; containerized.
 
 `Python` `NumPy` `pandas` `PuLP` `pytest` `Docker` 
 
