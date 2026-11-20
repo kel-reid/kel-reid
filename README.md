@@ -1,72 +1,65 @@
-# Hello, I'm Kel!
+# Kel Reid
+Senior Software Engineer with 12 years of experience specializing in backend architecture, distributed systems, and real-time trading infrastructure. Focused on deterministic state integrity, asynchronous concurrency in Python, and fail-closed operational safeguards.
 
-I'm a Senior Software Engineer with 12 years of experience specializing in backend architecture, distributed systems, and low-latency infrastructure. I design and scale resilient, concurrent services with strict state integrity, event-driven pipelines, and production-grade observability.
+## Featured Projects
 
-## Projects
-
-### [Market-Making Trading System](https://github.com/kel-reid/Kalshi-Trading-Bot)
-
-An event-driven market-making trading system for prediction markets on Kalshi. Built to manage real capital with a zero-tolerance posture for unhandled state drift, prioritizing capital preservation and fail-closed safety.
-
-- **Concurrency & pricing:** Built in Python asyncio to execute real-time Avellaneda-Stoikov pricing and dynamic inventory hedging against live order books.
-- **Market discovery & routing:** Dynamically discovers active markets, spins up isolated worker tasks per contract slate, and tears down execution on settlement.
-- **Collateral management:** Tracks balances across exchange shards, routing liquidity from shard 0 and automating sweeps to rebalance capital across contracts.
-- **Dual-track state engine:** Combines low-latency WebSocket streams with periodic REST and PostgreSQL reconciliation to guarantee P&L conservation invariants.
-- **Fail-closed safeguards:** Enforces price-velocity circuit breakers, post-fill quiescence windows, session loss limits, and an automated SIGTERM kill switch that confirms quote withdrawals before exiting.
-- **Infrastructure & observability:** Provisioned on DigitalOcean via Terraform with private VPCs, Doppler secret injection, automated GitHub Actions CI/CD, and Prometheus/Grafana dashboards.
-
+### [Market-Making Trading Engine](https://github.com/kel-reid/Kalshi-Trading-Bot)
+An autonomous, event-driven market-making engine for prediction markets, designed and deployed to trade live capital in production.
+- **Asyncio Core Loop & Thread Offloading:** Core event loop in Python asyncio manages WebSocket feeds, strategy recalculation, and a token-bucket rate limiter. Offloads blocking I/O (RSA auth signatures and PostgreSQL writes) via `asyncio.to_thread` to maintain sub-second loop responsiveness.
+- **Microstructure Pricing & Dynamic Spread Engine:** Adapts the Avellaneda-Stoikov model for binary contracts. Calculates rolling 30-second realized volatility and book depth, hard-floors spreads against Kalshi's quadratic transaction fee curve (`0.07 * P * (1 - P)`), and scales risk aversion ($\gamma$) dynamically with inventory drift.
+- **Seasonal Sports Router & Discovery:** Autonomous market selection across thousands of Kalshi listings. Normalizes system time to Eastern Time, prioritizes active league slates by day-of-week (CFB on Fri/Sat, NFL on Sun/Mon/Thu, NBA midweek), and verifies live daily game counts via ESPN's schedule API before probing books.
+- **Authoritative State Reconciliation:** In-memory positions update on low-latency WebSocket execution streams. Enforces periodic REST audits against the exchange ledger every five minutes to catch dropped packets and eliminate local inventory drift.
+- **Fail-Closed Safeguards:** Implements price-velocity circuit breakers, post-fill quiescence pauses, session loss limits, and OS signal handlers (`SIGINT`/`SIGTERM`) that execute a synchronous kill switch to purge all resting quotes before process exit.
+- **Production Infrastructure & Telemetry:** Provisioned on DigitalOcean using Terraform with private VPCs, Doppler secret injection, automated GitHub Actions CI/CD, and custom Prometheus metrics piped into Grafana.
 
 ### [DFS Optimizer](https://github.com/kel-reid/DFS-Optimizer)
+A Monte Carlo and mathematical optimization engine built to construct high-ceiling daily fantasy sports portfolios for FanDuel and DraftKings.
+- Formulates lineup selection as a mixed-integer programming problem in PuLP/CBC under strict salary cap, stacking, exposure, and uniqueness constraints.
+- Simulates 5,000 slates using skewed player outcome distributions and correlated team-level shocks in NumPy against an empirical field of 10,000 opponent lineups.
+- Solves portfolio selection to maximize risk-adjusted tournament payoff within configurable per-position exposure limits.
+- Containerized with Docker and tested via pytest.
 
-A Monte Carlo and optimization engine built to generate 150-lineup NFL daily fantasy portfolios for FanDuel and DraftKings.
-
-- Generates 500 candidate lineups with an integer-programming solver (PuLP/CBC) under salary-cap, stacking, exposure and uniqueness constraints.
-- Simulates 5,000 slates with skewed player distributions and correlated team-level shocks in NumPy, plus a field of 10,000 opponent lineups, then scores every candidate against that field.
-- Selects the 150 lineups with the best simulated return, within per-position exposure caps.
-- Detects the target site from its input files and runs the same pipeline for both; tested with pytest; containerized.
-
-
-## Skills
-
+## Technical Stack
 <table>
   <thead>
     <tr>
-      <th align="left" valign="top">Languages</th>
+      <th align="left" valign="top">Languages &amp; Runtimes</th>
       <th align="left" valign="top">Architecture &amp; Systems</th>
-      <th align="left" valign="top">Infrastructure</th>
-      <th align="left" valign="top">Observability</th>
       <th align="left" valign="top">Data &amp; Persistence</th>
+      <th align="left" valign="top">Infrastructure &amp; Tooling</th>
+      <th align="left" valign="top">Observability</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td valign="top">
-        Python<br/>
+        Python (asyncio)<br/>
         SQL<br/>
         Bash / Shell
       </td>
       <td valign="top">
         Distributed Systems<br/>
-        Event-Driven Architecture<br/>
-        asyncio / Concurrency<br/>
+        Real-Time Order Books<br/>
+        Market Making Models<br/>
         REST &amp; WebSocket APIs
       </td>
       <td valign="top">
-        Terraform<br/>
+        PostgreSQL<br/>
+        Redis<br/>
+        NumPy / pandas<br/>
+        State Reconciliation
+      </td>
+      <td valign="top">
         Docker<br/>
-        GitHub Actions CI/CD<br/>
+        Terraform<br/>
         DigitalOcean / VPC<br/>
-        Doppler
+        Doppler Secrets<br/>
+        GitHub Actions CI/CD
       </td>
       <td valign="top">
         Prometheus<br/>
-        Grafana Cloud / Alloy<br/>
+        Grafana<br/>
         Sentry
-      </td>
-      <td valign="top">
-        PostgreSQL<br/>
-        NumPy / pandas<br/>
-        Data Modeling
       </td>
     </tr>
   </tbody>
@@ -74,4 +67,4 @@ A Monte Carlo and optimization engine built to generate 150-lineup NFL daily fan
 
 ## Get in touch
 
-I'm always happy to talk backend systems, reliability or testing. Find me on [LinkedIn](https://www.linkedin.com/in/kel-reid/).
+Find me on [LinkedIn](https://www.linkedin.com/in/kel-reid/),  [X](https://x.com/kel_codes_),  or reach out via email at [kreidva@icloud.com](mailto:kreidva@icloud.com).
